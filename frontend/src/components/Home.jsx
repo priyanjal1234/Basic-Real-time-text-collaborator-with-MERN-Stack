@@ -89,7 +89,7 @@ const Home = () => {
   function handleJoinDocument(documentId) {
     navigate(`/document/${documentId}`)
     toast.success("Successfully Joined")
-    socket.emit("join-document",documentId)
+    socket.emit("join-document",{documentId,user})
   }
 
   return (

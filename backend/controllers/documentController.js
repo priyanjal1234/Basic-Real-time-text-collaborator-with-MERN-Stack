@@ -29,7 +29,7 @@ module.exports.getAllDocuments = async function (req, res) {
 };
 
 module.exports.updateDocument = async function (req, res) {
-  let user = await userModel.findOne({email: req.user.email})
+  
   try {
     let { id } = req.params;
     let { content } = req.body;
@@ -39,7 +39,7 @@ module.exports.updateDocument = async function (req, res) {
         .status(404)
         .json({ message: "Document with this id not found" });
     document.content = content;
-    document.sharedWith.push(user._id)
+    
     await document.save();
     return res.status(200).json({ message: "Changes Saved" });
   } catch (error) {

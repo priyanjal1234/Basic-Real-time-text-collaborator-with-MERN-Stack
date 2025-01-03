@@ -35,13 +35,15 @@ app.use(cors({
 io.on("connection",function(socket) {
     console.log(`Connected ${socket.id}`)
 
-    socket.on("join-document",async function(documentId) {
+    socket.on("join-document",async function({documentId,user}) {
         socket.join(documentId)
         console.log(`User with id ${socket.id} joined the room with id ${documentId}`)
         let document = await documentModel.findOne({_id: documentId})
         if(document) {
             socket.emit("load-content",{documentId,content:document.content})
-        }
+            document.push(user._id)
+            await document.save()
+        }   
         else {
             let newDoc = await documentModel.create({_id: documentId})
             socket.emit("load-content",newDoc.content)
