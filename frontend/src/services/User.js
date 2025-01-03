@@ -3,7 +3,7 @@ import api from "./api";
 class UserService {
   constructor() {
     this.api = api;
-    this.baseUrl = "http://localhost:3000/api/users";
+    this.baseUrl = "https://basic-real-time-text-collaborator-with.onrender.com/api/users";
   }
 
   async createAccount({ name, email, password }) {
