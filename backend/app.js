@@ -59,7 +59,8 @@ io.on("connection", function (socket) {
     if (document) {
       document.sharedWith = document.sharedWith.filter(
         (id) => id.toString() !== user?._id.toString()
-      );
+      ); 
+      await document.save()
       console.log(`User with ${socket.id} left the document ${id}`);
     }
     
