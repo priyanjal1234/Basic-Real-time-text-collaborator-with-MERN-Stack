@@ -93,6 +93,8 @@ const Home = () => {
   async function handleDeleteDoc(docId) {
     try {
       await documentService.deleteDocument(docId);
+
+      fetchAllDocuments();
     } catch (error) {
       toast.error(
         error?.response?.data?.message || error?.response?.data?.errorMessage
