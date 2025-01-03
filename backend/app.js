@@ -41,7 +41,7 @@ io.on("connection",function(socket) {
         let document = await documentModel.findOne({_id: documentId})
         if(document) {
             socket.emit("load-content",{documentId,content:document.content})
-            document.push(user._id)
+            document.sharedWith.push(user._id)
             await document.save()
         }   
         else {
