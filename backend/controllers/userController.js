@@ -18,6 +18,8 @@ module.exports.registerUser = async function (req, res) {
     let token = jwt.sign({ name, email }, process.env.JWT_KEY);
     res.cookie("token", token, {
       maxAge: 10 * 365 * 24 * 60 * 60 * 1000,
+      secure: true,
+      sameSite: 'None'
     });
     return res.status(201).json({ message: "Registration Successfull", token });
   } catch (error) {
@@ -36,6 +38,8 @@ module.exports.loginUser = async function (req, res) {
         let token = jwt.sign({ email, name: user.name }, process.env.JWT_KEY);
         res.cookie("token", token, {
           maxAge: 10 * 365 * 24 * 60 * 60 * 1000,
+      secure: true,
+      sameSite: 'None'
         });
         return res.status(200).json({ message: "Login Success", token, user });
       } else {
