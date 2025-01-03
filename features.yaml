@@ -1,0 +1,41 @@
+User Authentication:
+
+Allow users to register and log in securely with JWT-based authentication.
+Hash passwords before storing them in the database.
+Use middleware to protect routes, ensuring only authenticated users can access their documents.
+
+Document Management:
+
+Users can create new documents with a unique title.
+A dashboard displays a list of all documents owned by or shared with the user.
+Users can open existing documents for editing or viewing.
+Include options to delete documents.
+
+Rich Text Editor:
+
+Use a rich text editor library (e.g., Quill.js, Draft.js, or TipTap) for document editing.
+
+
+Support essential formatting options:
+Bold, italic, underline.
+Headings, lists, and links.
+Save the content in a structured format (e.g., JSON or HTML).
+
+
+Real-Time Collaboration:
+
+Implement Socket.IO for real-time updates, allowing multiple users to edit the same document simultaneously.
+Changes made by one user should reflect instantly on all connected users' screens.
+
+
+Autosave:
+
+Automatically save document changes as the user types.
+Use debouncing or throttling to optimize server requests for saving updates.
+Show a visual indicator (e.g., "Saving..." or "All changes saved") to the user.
+
+
+Search and Filter:
+
+Implement a search bar on the dashboard to allow users to search documents by title.
+Add the ability to filter documents by creation or last modified date.
