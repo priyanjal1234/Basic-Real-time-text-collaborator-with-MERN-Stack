@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import socket, { connectSocket } from "../config/socket";
 import documentService from "../services/Document";
 import { toast } from "react-toastify";
+import { UserDataContext } from "../context/UserContext";
 
 const Document = () => {
   let { id } = useParams();
   const [editValue, seteditValue] = useState("");
   const [isDisabled, setisDisabled] = useState(true);
   const [isSaved, setisSaved] = useState(false);
+
+  let {user} = useContext(UserDataContext)
 
   useEffect(() => {
     connectSocket();
@@ -51,7 +54,7 @@ const Document = () => {
   }
 
   function handleLeaveRoom() {
-    socket.emit("leave-document", id);
+    socket.emit("leave-document", {id,user});
     toast.success("Document Left Success");
   }
 
