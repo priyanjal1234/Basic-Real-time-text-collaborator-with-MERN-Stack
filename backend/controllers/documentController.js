@@ -29,7 +29,6 @@ module.exports.getAllDocuments = async function (req, res) {
 };
 
 module.exports.updateDocument = async function (req, res) {
-  
   try {
     let { id } = req.params;
     let { content } = req.body;
@@ -39,9 +38,24 @@ module.exports.updateDocument = async function (req, res) {
         .status(404)
         .json({ message: "Document with this id not found" });
     document.content = content;
-    
+
     await document.save();
     return res.status(200).json({ message: "Changes Saved" });
+  } catch (error) {
+    return res.status(500).json({ errorMessage: error.message });
+  }
+};
+
+module.exports.deleteDocument = async function (req, res) {
+  try {
+    let user = await userModel.findOne({ email: req.user.email });
+    let { docId } = req.params;
+    await documentModel.findOneAndDelete({ _id: docId, user: user._id });
+    user.documents = user.documents.filter(
+      (id) => String(id) !== String(docId)
+    );
+    await user.save();
+    return res.status(200).json({ message: "Document Deleted Successfully" });
   } catch (error) {
     return res.status(500).json({ errorMessage: error.message });
   }

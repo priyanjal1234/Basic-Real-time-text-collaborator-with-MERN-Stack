@@ -39,6 +39,14 @@ class DocumentService {
       throw error;
     }
   }
+
+  async deleteDocument(docId) {
+    try {
+      await this.api.delete(`${this.baseUrl}/delete/document/${docId}`,{withCredentials: true})
+    } catch (error) {
+      throw error
+    }
+  }
 }
 
 let documentService = new DocumentService();

@@ -16,8 +16,6 @@ const Home = () => {
 
   useEffect(() => {
     connectSocket();
-
-    
   }, []);
 
   async function fetchLoggedinUser() {
@@ -63,7 +61,7 @@ const Home = () => {
 
       fetchAllDocuments();
 
-      settitle('')
+      settitle("");
     } catch (error) {
       toast.error(
         error?.response?.data?.message || error?.response?.data?.errorMessage
@@ -74,11 +72,11 @@ const Home = () => {
   async function handleLogout() {
     try {
       await userService.logoutAccount();
-      toast.success("Logout Success")
-      setisLoggedin(false)
-      setuser({})
-      disconnectSocket()
-      navigate("/login")
+      toast.success("Logout Success");
+      setisLoggedin(false);
+      setuser({});
+      disconnectSocket();
+      navigate("/login");
     } catch (error) {
       toast.error(
         error?.response?.data?.message || error?.response?.data?.errorMessage
@@ -87,9 +85,19 @@ const Home = () => {
   }
 
   function handleJoinDocument(documentId) {
-    navigate(`/document/${documentId}`)
-    toast.success("Successfully Joined")
-    socket.emit("join-document",{documentId,user})
+    navigate(`/document/${documentId}`);
+    toast.success("Successfully Joined");
+    socket.emit("join-document", { documentId, user });
+  }
+
+  async function handleDeleteDoc(docId) {
+    try {
+      await documentService.deleteDocument(docId);
+    } catch (error) {
+      toast.error(
+        error?.response?.data?.message || error?.response?.data?.errorMessage
+      );
+    }
   }
 
   return (
@@ -132,9 +140,20 @@ const Home = () => {
                 className="w-[600px] h-fit mb-3 flex items-center justify-between"
               >
                 <h2>{doc?.title}</h2>
-                <button onClick={() => handleJoinDocument(doc?._id)} className="px-3 py-2 bg-blue-600 rounded-lg">
+                <button
+                  onClick={() => handleJoinDocument(doc?._id)}
+                  className="px-3 py-2 bg-blue-600 rounded-lg"
+                >
                   Join
                 </button>
+                {doc?.user === user?._id && (
+                  <span
+                    onClick={() => handleDeleteDoc(doc?._id)}
+                    className="text-red-500 cursor-pointer"
+                  >
+                    Delete
+                  </span>
+                )}
               </div>
             ))}
           </div>
