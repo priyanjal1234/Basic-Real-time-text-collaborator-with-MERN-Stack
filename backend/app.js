@@ -58,7 +58,7 @@ io.on("connection", function (socket) {
     let document = await documentModel.findOne({ _id: id });
     if (document) {
       document.sharedWith = document.sharedWith.filter(
-        (id) => id.toString() !== user?._id.toString()
+        (id) => String(id) !== String(user?._id)
       ); 
       await document.save()
       console.log(`User with ${socket.id} left the document ${id}`);
